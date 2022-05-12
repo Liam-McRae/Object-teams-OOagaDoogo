@@ -1,25 +1,35 @@
+public class Card{
 
-//'ello A b
+  private int num;
+  private int suit;
+  private int value;
+  public static final int[] points = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
 
-public interface Card{
 
- 
-  // Gets a random card from the would-be complete deck of cards
-  public Card getRandom();
+  public Card(int num) {
 
-  // Gets a card based on a seed number
-  public Card getByNumber(int seed);
+    this.num = num;
+    this.suit = num / CardList.VALUES.length;
+    this.value = num % CardList.VALUES.length;
 
-  // Gets the index value from the list of possible suites
-  public int getSuiteValue();
+  }
 
-  // Gets the number value from the card
-  public int getCardNumber();
+  public Card(int value, int suit){
+    this.value = value;
+    this.suit = suit;
+  }
 
-  // Gets a nice looking String showing the card
-  public String getLovely();
 
-  // Returns the possible Suites for the card
-  public String[] getSuits();
+  public int points(){
+    return points[num % 13];
+  }
+
+  public String toString() {
+    return CardList.SUITES[suit] + CardList.VALUES[value];
+  }
+
+  public int num() {
+    return num;
+  }
   
 }
