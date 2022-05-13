@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class CardList{
   
-  static final String[] SUITES = {"♠","♥","♦","♣"};
+  static final String[] SUITES = {"♤","♡","♢","♧"};
   static final String[] VALUES = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
   private ArrayList<Card> cards = new ArrayList<Card>();
