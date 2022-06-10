@@ -2,16 +2,20 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 class BlackJack {
+
+  public static void main(String[] args) {
+    play(new Player);
+  }
   
-  public static Player play(Player player) throws FileNotFoundException{   //returns money change & win change
+  public static Player play(Player player) throws FileNotFoundException{   //returns updated players
     
     int money = player.cash();
     Scanner scan = new Scanner(System.in);
 
-    CardList deck = new CardList();
+    DeckCardList deck = new DeckCardList();
     deck.shuffle();
-    CardList hand = new CardList(deck.draw(2));
-    CardList dealerHand = new CardList(deck.draw(2));
+    DeckCardList hand = new DeckCardList(deck.draw(2));
+    DeckCardList dealerHand = new DeckCardList(deck.draw(2));
       
     //get player bet
     int bet = money / 2;

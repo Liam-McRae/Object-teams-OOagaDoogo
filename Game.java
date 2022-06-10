@@ -25,7 +25,7 @@ public class Game{
     Scanner scan = new Scanner(System.in);
     sv = new SaveLoad("PlayerData.csv");
     
-    player = logIn(scan); // assign player   
+    player = logIn(); // assign player   
     selection(); // begin gameplay
   }
 
@@ -59,7 +59,7 @@ public class Game{
       if(input.charAt(0) == '1'){
         launch("BJ");
       } else if(input.charAt(0) == '2') {
-        
+        launch("UNO");
       } else if(input.charAt(0) == '3') {
         break;
       } else if(false) {
@@ -72,6 +72,7 @@ public class Game{
         System.out.println("\"" + input + "\" is not a valid option.");
       }
     }
+
     scan.close();
     System.out.println("Thank you for playing!");
   }
@@ -83,28 +84,32 @@ public class Game{
     if(gameName.equals("BJ")){
       savePlayer(BlackJack.play(player));
     }
+    /*
     if(gameName.equals("UNO")) {
-      Scanner scan = new Scanner(System.in);
+      Scanner scan2 = new Scanner(System.in);
       System.out.println("Num of players: ");
-      int playerNum = scan.nextInt();
+      int playerNum = scan2.nextInt();
       System.out.println();
       Player[] players = new Player[playerNum];
-      for(int i = 0; i < playerNum; i++) {
-        players[i] = logIn(scan);
+      players[0] = player;
+      for(int i = 1; i < playerNum; i++) {
+        players[i] = logIn();
       }
     
       Player[] data = Uno.play(players);
-      
+      scan2.close();
     }
+    */
   }
 
   
 
   // sets player, allows creation of new player
-  public static Player logIn(Scanner scan) throws FileNotFoundException{
+  public static Player logIn() throws FileNotFoundException{
 
     boolean logging = true;
-    
+    Scanner scan = new Scanner(System.in);
+
     System.out.println("<<< Log in >>>");
     Player tempPlayer = null;
     while(logging) {
