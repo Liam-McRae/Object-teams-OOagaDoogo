@@ -2,12 +2,25 @@ import java.util.ArrayList;
 
 public class DeckCardList extends CardList {
 
-    String[] suites = new String[] {"a", "h", "d", "c"};
+    String[] suites = new String[] {"S", "H", "D", "C"};
     String[] values = new String[] {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     int[] points = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
 
     public DeckCardList() {
         super();
+    }
+
+    public DeckCardList(int num) {
+        super();
+        if(num == 0) {
+            for(int i = 0; i < 52; i++) {
+                Card card = new Card(i);
+                card.SUITES(suites);
+                card.VALUES(values);
+                card.POINTS(points);
+                super.add(card);
+            }
+        }
     }
 
     public DeckCardList(Card[] set) {

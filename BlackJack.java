@@ -2,9 +2,9 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 class BlackJack {
-
-  public static void main(String[] args) {
-    play(new Player);
+  public static void main(String[] args) throws FileNotFoundException{
+    SaveLoad sv = new SaveLoad("PlayerData.csv");
+    play(sv.getPlayer("test"));
   }
   
   public static Player play(Player player) throws FileNotFoundException{   //returns updated players
@@ -12,7 +12,7 @@ class BlackJack {
     int money = player.cash();
     Scanner scan = new Scanner(System.in);
 
-    DeckCardList deck = new DeckCardList();
+    DeckCardList deck = new DeckCardList(0);
     deck.shuffle();
     DeckCardList hand = new DeckCardList(deck.draw(2));
     DeckCardList dealerHand = new DeckCardList(deck.draw(2));

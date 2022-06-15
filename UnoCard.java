@@ -14,8 +14,5 @@ public class UnoCard extends Card{
     public String toString() {
         return VALUES[super.num()];
     }
-
-
-
-
+    
 }

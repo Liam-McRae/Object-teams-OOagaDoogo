@@ -35,6 +35,7 @@ public class Card{
   }
 
   public void set(int num) {
+    //System.out.println(num);
     this.num = num;
   }
 
@@ -43,7 +44,9 @@ public class Card{
   }
 
   public String toString() {
-    return SUITES[suit] + VALUES[value];
+    //System.out.println("num: " + num);
+    //System.out.println(num / VALUES.length + " - " + num % VALUES.length);
+    return SUITES[num / VALUES.length] + VALUES[num % VALUES.length];
   }
 
   public int num() {

@@ -33,6 +33,10 @@ public class Game{
 
   // saves player data. Although this doesn't need to be a method because it is only used once here, the other classes for games need to be able to themselves save, in order to prevent save-scumming
   public static void savePlayer(Player returnPlayer) throws FileNotFoundException{
+    
+    if(sv == null) {
+      sv = new SaveLoad("PlayerData.csv");
+    }
     player = returnPlayer;
     sv.update(player.name(), player);
     sv.save();
@@ -84,7 +88,7 @@ public class Game{
     if(gameName.equals("BJ")){
       savePlayer(BlackJack.play(player));
     }
-    /*
+    
     if(gameName.equals("UNO")) {
       Scanner scan2 = new Scanner(System.in);
       System.out.println("Num of players: ");
@@ -99,7 +103,7 @@ public class Game{
       Player[] data = Uno.play(players);
       scan2.close();
     }
-    */
+    
   }
 
   
