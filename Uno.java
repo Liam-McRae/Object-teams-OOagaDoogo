@@ -5,29 +5,41 @@ import java.util.Random;
 public class Uno {
 
   public static void main(String[] args) {
-    Player[] players = {new Player("one")};
-    play(players);
+    Player[] playersgo = {new Player("one")};
+    play(playersgo);
   }
+
+  private static CardList deck;
+  private static CardList discard;
+  private static CardList[] hands;
+  private static Scanner scan;
+  private static Player[] players;
 
   public static Player[] play(Player[] playersIn) {
 
-    Scanner scan = new Scanner(System.in);
-    Player[] players = playersIn;
-    CardList deck = new CardList(unoDeck());
-    CardList discard = new CardList();
-    CardList[] hands = new CardList[playersIn.length];
+    players = playersIn;
+    scan = new Scanner(System.in);
+    deck = new CardList(unoDeck());
+    discard = new CardList();
+    hands = ;
 
-    System.out.println("Select ruleset:");
-    System.out.println("1) standard");
-    System.out.println("2) 5 card deal");
-    System.out.println("3) 7s and 0s hand swapping");
-    int ruleset = scan.nextInt();
-    System.out.println();
-    if(ruleset == 1) {
-      for(int i = 0; i < hands.length; i++) {
-      }
-      
+    
+    for(int i = 0; i < hands.length; i++) {
+      hands[i].set(deck.draw(7));
     }
+
+    int player = 0;
+    while(true) {
+      if(player >= players.length) {
+        player = 0;
+      }
+
+      if (turn(player)) {break;}
+
+
+    }
+
+    
     
 
     
@@ -42,9 +54,47 @@ public class Uno {
     
   }
 
+
+
+  public static boolean turn(int player) {
+    System.out.println(players[player].name() + "'s turn, press enter when ready");
+    scan.next();
+
+    display(hands[player]);
+
+
+
+
+    return true;
+  }
+
+
+
+  public static void display(CardList cards) {
+    String str = "You have: ";
+    for(int i = 0; i < cards.cardArr().length; i++) {
+      str += cards.get(i);
+      if(i != cards.cardArr().length - 1) {
+        str += ", ";
+      }
+    }
+  }
+
+
+
+  public static void reshuffleDeck() {
+    deck = discard;
+    discard = new CardList();
+    deck.shuffle();
+    discard.add(deck.draw(1));
+    
+  }
+
+
+
   public static UnoCard[] unoDeck() {
 
-    /* //close to working, but I'm running out of time
+    /* close to working, but I'm running out of time
     UnoCard[] output = {};
     for(int i = 0; i < 4; i++) {
       System.out.println("new " + i);
@@ -53,25 +103,30 @@ public class Uno {
         output = add(output, new UnoCard((j % 13) + 1 + i*13));
       }
     }
-    
     for(UnoCard card : output) {
       System.out.println(card);
     }
     return output;
     */
 
-    UnoCard[] output = {};
-    int[] cards = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
+    UnoCard[] output = new UnoCard[108];
 
-    for(int i = 0; i < cards.length; i++) {
-      output = add(output, new UnoCard(cards[i]));
+    // entire uno deck, 108 values representing cards. This is a terrible solution considering the deck
+    // repeats itself SOMETIMES, but this is also the easiest solution. Above is the better method, 
+    // but i couldn't get it working and I'm running out of time
+    int[] cards = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, /*blue*/ 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, /* green */ 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, /* yellow */ 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, /* wild */ 52, 52, 52, 52, 53, 53, 53, 53};
+
+    for(int i = 0; i < output.length; i++) {
+      output[i] = new UnoCard(cards[i]);
     }
 
     return output;
   }
 
+
+
+  // returns a given CardList with a given Card appended. I used to use this method, but not anymore. Ill keep it in here just in case though.
   public static UnoCard[] add(UnoCard[] org, UnoCard add) {
-    System.out.println(add);
     UnoCard[] output = new UnoCard[org.length + 1];
     for(int i = 0; i < org.length; i++) {
       output[i] = org[i];

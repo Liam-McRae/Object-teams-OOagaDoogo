@@ -38,6 +38,12 @@ public class CardList{
     cards.add(card);
   }
 
+  public void add(Card[] cardArr) {
+    for(int i = 0; i < cardArr.length; i++) {
+      cards.add(cardArr[i]);
+    }
+  }
+
   public Card get(int index) {
     return cards.get(index);
   }
@@ -47,7 +53,6 @@ public class CardList{
   }
 
   public Card[] draw(int num) {
-    System.out.println("draw: " + num);
     Card[] returnArr = new Card[num];
     for(int i = 0; i < num; i++) {
       returnArr[i] = cards.remove(0);
