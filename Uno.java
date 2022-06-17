@@ -22,14 +22,11 @@ public class Uno {
     deck = new CardList(unoDeck());
     deck.shuffle();
     discard = new CardList();
+    discard.add(deck.draw(1));
     hands = new CardList[players.length];
-    //without this for loop, i get a null pointer exception. Dunno why, I thought ---new Object[number]--- created using the constructor
-    for(int i = 0; i < hands.length; i++) {
-      hands[i] = new CardList();
-    }
     
     for(int i = 0; i < hands.length; i++) {
-      hands[i].set(deck.draw(7));
+      hands[i] = new CardList(deck.draw(7));
     }
 
     int player = 0;
@@ -64,18 +61,25 @@ public class Uno {
     System.out.println(players[player].name() + "'s turn, press enter when ready");
     scan.nextLine();
 
+    System.out.println("Discard: " + discard.get(discard.length() - 1));
+
     System.out.println(getDisplay(hands[player]));
 
+    hands[player].add(new UnoCard(52));
+
     while(true) {
-      System.out.print("Input the position of the card you want to play");
+      System.out.print("Input the position of the card you want to play: ");
       int input = scan.nextInt();
+      System.out.println();
       // plays card. Returns played card if succesful, else retuns null
-      UnoCard result = attemptPlay(hands[player].get(input + 1));
+      Card result = attemptPlay(hands[player].get(input - 1));
 
       if(result == null) {
         System.out.println("That is not a valid play.");
       } else {
         System.out.println("Successfully played " + result + ".");
+        hands[player].take(input - 1);
+        System.out.println();
         break;
       }
     }
@@ -86,9 +90,38 @@ public class Uno {
 
 
 
-  public static UnoCard attemptPlay(Card card) {
+  public static Card attemptPlay(Card card) {
+    // Because the given card and the discard pile card could possibly be normal Cards, and not UnoCards (Even though in the actual process they will never be normal cards), I have to convert them into UnoCards to make sure. I love and hate subclasses. I've spent a little less than an hour trying to figure this out, and now I'm just out of time.
+    boolean wild = (new UnoCard(card).value() < 0);
+    if(wild || (new UnoCard(card).color() == new UnoCard(discard.get(discard.length() - 1)).color() || new UnoCard(card).value() == new UnoCard(discard.get(discard.length() - 1)).value())) {
+
+      if(wild) {
+        System.out.print("Input desired color (r/b/g/y): ");
+        while(true) {
+          String input = scan.next();
+          int plus4 = (new UnoCard(card).value() + 1) * -4; // magically turns into 0 for wilds, 4 for +4s. kinda silly way of doing this, but it is very concise
+          if(input.equals("r")) {
+            card.set(52 + plus4);
+            break;
+          } else if(input.equals("b")) {
+            card.set(53 + plus4);
+            break;
+          } else if(input.equals("g")) {
+            card.set(54 + plus4);
+            break;
+          } else if(input.equals("y")) {
+            card.set(55 + plus4);
+            break;
+          }
+          System.out.println("That is not a valid color.");
+        }
+      }
+
+      discard.add(card);
+      return card;
+    }
     
-    
+    return null;
   }
 
 

@@ -71,6 +71,8 @@ public class CardList{
     }
   }
 
-
+  public int length() {
+    return cards.toArray().length;
+  }
   
 }
