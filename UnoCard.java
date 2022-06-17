@@ -14,5 +14,25 @@ public class UnoCard extends Card{
     public String toString() {
         return VALUES[super.num()];
     }
+
+    public int color() {
+      if(super.num() <= 12) {
+        return 0;
+      }
+      if(super.num() <= 25) {
+        return 1;
+      }
+      if(super.num() <= 38) {
+        return 2;
+      }
+      if(super.num() <= 51) {
+        return 3;
+      }
+      return 4;
+    }
+
+    public int num() {
+      
+    }
     
 }

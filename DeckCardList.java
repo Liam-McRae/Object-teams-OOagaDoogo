@@ -2,6 +2,10 @@ import java.util.ArrayList;
 
 public class DeckCardList extends CardList {
 
+
+
+    // This whole class is silly and redundant, but it is a holdover from a previous version. I dont have time to change it
+
     String[] suites = new String[] {"S", "H", "D", "C"};
     String[] values = new String[] {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
     int[] points = new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
